@@ -22,7 +22,7 @@ if not db_uri and os.getenv('RDS_HOSTNAME'):
 
 # 3) Final fallback for local dev (e.g. your docker-compose MySQL)
 if not db_uri:
-    db_uri = 'mysql+pymysql://root:rootpassword@localhost:3306/fresher_mng'
+    raise RuntimeError("SQLALCHEMY_DATABASE_URI is not set")
 
 app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -549,7 +549,3 @@ def view_performance(batch_id):
 @app.route('/thank-you')
 def thank_you():
     return render_template('thank_you.html')
-
-
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
